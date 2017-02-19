@@ -8,5 +8,13 @@ script:
 # build image
 - docker build -t thenatureofsoftware/jdk-arm64 .
 # test image
-- docker run thenatureofsoftware/jdk-arm64 java --version
+- docker run thenatureofsoftware/jdk-arm64 java -version
 # push image
+- >
+  if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+    TAG=$(grep VERSION Dockerfile|awk 'NF>1{print $NF'})
+    docker tag thenatureofsoftware/jdk-arm64 thenatureofsoftware/jdk-arm64:$TAG
+    docker push thenatureofsoftware/jdk-arm64:$TAG
+    docker push thenatureofsoftware/jdk-arm64:latest
+  fi
