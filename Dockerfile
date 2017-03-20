@@ -1,12 +1,12 @@
-FROM thenatureofsoftware/ubuntu-arm64:16.04
+FROM thenatureofsoftware/ubuntu-arm64:xenial
 
 MAINTAINER larmog https://github.com/larmog
 
 ENV DEBIAN_FRONTEND noninteractive
-ENV VERSION 1.8.0_121-b13
-ENV JAVA_JDK=8 \
-    JAVA_UPDATE=121 \
-    JAVA_BUILD=13 \
+ENV VERSION 1.9.0_ea-b157
+ENV JAVA_JDK=9 \
+    JAVA_UPDATE="EA" \
+    JAVA_BUILD=157 \
     JAVA_HOME="/opt/jdk" \
     PATH=$PATH:${PATH}:/opt/jdk/bin \
     JAVA_OPTS="-server"
@@ -14,10 +14,10 @@ ENV JAVA_JDK=8 \
 # Download and install Java
 RUN apt-get -y update \
   && apt-get install -y curl \
-  && curl -sSL --header "Cookie: oraclelicense=accept-securebackup-cookie;" "http://download.oracle.com/otn-pub/java/jdk/${JAVA_JDK}u${JAVA_UPDATE}-b${JAVA_BUILD}/e9e7ea248e2c4826b92b3f075a80e441/jdk-${JAVA_JDK}u${JAVA_UPDATE}-linux-arm64-vfp-hflt.tar.gz" | tar -xz \
+  && curl -sSL --header "Cookie: oraclelicense=accept-securebackup-cookie;" "http://www.java.net/download/java/jdk${JAVA_JDK}/archive/${JAVA_BUILD}/binaries/jdk-${JAVA_JDK}-ea+${JAVA_BUILD}_linux-arm64-vfp-hflt_bin.tar.gz" | tar -xz \
   && echo "" > /etc/nsswitch.conf && \
   mkdir -p /opt && \
-  mv jdk1.${JAVA_JDK}.0_${JAVA_UPDATE} /opt/jdk-${JAVA_JDK}u${JAVA_UPDATE}-b${JAVA_BUILD} && \
+  mv jdk-${JAVA_JDK} /opt/jdk-${JAVA_JDK}u${JAVA_UPDATE}-b${JAVA_BUILD} && \
   ln -s /opt/jdk-${JAVA_JDK}u${JAVA_UPDATE}-b${JAVA_BUILD} /opt/jdk && \
   ln -s /opt/jdk/jre/bin/java /usr/bin/java && \
   echo "hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4" >> /etc/nsswitch.conf && \
