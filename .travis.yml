@@ -11,7 +11,7 @@ script:
 - docker run thenatureofsoftware/jdk-arm64 java -version
 # push image
 - >
-  if [ "$TRAVIS_BRANCH" == "master" ] || [ "$TRAVIS_BRANCH" == "jdk9" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+  if [ "$TRAVIS_BRANCH" == "jdk9" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
     TAG=$(grep VERSION Dockerfile|awk 'NF>1{print $NF'})
     docker tag thenatureofsoftware/jdk-arm64 thenatureofsoftware/jdk-arm64:$TAG
