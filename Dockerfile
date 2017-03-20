@@ -1,4 +1,4 @@
-FROM thenatureofsoftware/ubuntu-arm64:16.04
+FROM thenatureofsoftware/ubuntu-arm64:xenial
 
 MAINTAINER larmog https://github.com/larmog
 
